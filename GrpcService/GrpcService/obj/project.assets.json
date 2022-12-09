@@ -722,11 +722,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SourceVS\\repos\\voidGRPC\\GrpcService\\GrpcService\\GrpcService.csproj",
+      "projectUniqueName": "D:\\SourceVS\\repos\\BackToChad\\GrpcService\\GrpcService\\GrpcService.csproj",
       "projectName": "GrpcService",
-      "projectPath": "D:\\SourceVS\\repos\\voidGRPC\\GrpcService\\GrpcService\\GrpcService.csproj",
+      "projectPath": "D:\\SourceVS\\repos\\BackToChad\\GrpcService\\GrpcService\\GrpcService.csproj",
       "packagesPath": "C:\\Users\\antho\\.nuget\\packages\\",
-      "outputPath": "D:\\SourceVS\\repos\\voidGRPC\\GrpcService\\GrpcService\\obj\\",
+      "outputPath": "D:\\SourceVS\\repos\\BackToChad\\GrpcService\\GrpcService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
