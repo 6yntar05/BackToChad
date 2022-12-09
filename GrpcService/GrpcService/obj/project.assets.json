@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Google.Protobuf/3.18.0": {
+      "Google.Protobuf/3.21.5": {
         "type": "package",
         "compile": {
           "lib/net5.0/Google.Protobuf.dll": {
@@ -15,12 +15,18 @@
           }
         }
       },
-      "Grpc.AspNetCore/2.40.0": {
+      "Grpc/2.46.5": {
         "type": "package",
         "dependencies": {
-          "Google.Protobuf": "3.18.0",
-          "Grpc.AspNetCore.Server.ClientFactory": "2.40.0",
-          "Grpc.Tools": "2.40.0"
+          "Grpc.Core": "2.46.5"
+        }
+      },
+      "Grpc.AspNetCore/2.50.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Protobuf": "3.21.5",
+          "Grpc.AspNetCore.Server.ClientFactory": "2.50.0",
+          "Grpc.Tools": "2.50.0"
         },
         "compile": {
           "lib/net6.0/_._": {}
@@ -29,10 +35,10 @@
           "lib/net6.0/_._": {}
         }
       },
-      "Grpc.AspNetCore.Server/2.40.0": {
+      "Grpc.AspNetCore.Server/2.50.0": {
         "type": "package",
         "dependencies": {
-          "Grpc.Net.Common": "2.40.0"
+          "Grpc.Net.Common": "2.50.0"
         },
         "compile": {
           "lib/net6.0/Grpc.AspNetCore.Server.dll": {
@@ -48,11 +54,11 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Grpc.AspNetCore.Server.ClientFactory/2.40.0": {
+      "Grpc.AspNetCore.Server.ClientFactory/2.50.0": {
         "type": "package",
         "dependencies": {
-          "Grpc.AspNetCore.Server": "2.40.0",
-          "Grpc.Net.ClientFactory": "2.40.0"
+          "Grpc.AspNetCore.Server": "2.50.0",
+          "Grpc.Net.ClientFactory": "2.50.0"
         },
         "compile": {
           "lib/net6.0/Grpc.AspNetCore.Server.ClientFactory.dll": {
@@ -68,26 +74,65 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Grpc.Core.Api/2.40.0": {
+      "Grpc.Core/2.46.5": {
+        "type": "package",
+        "dependencies": {
+          "Grpc.Core.Api": "2.46.5",
+          "System.Memory": "4.5.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Grpc.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Grpc.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/linux-arm64/native/libgrpc_csharp_ext.arm64.so": {
+            "assetType": "native",
+            "rid": "linux-arm64"
+          },
+          "runtimes/linux-x64/native/libgrpc_csharp_ext.x64.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx-x64/native/libgrpc_csharp_ext.x64.dylib": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-x64/native/grpc_csharp_ext.x64.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/grpc_csharp_ext.x86.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
+      "Grpc.Core.Api/2.50.0": {
         "type": "package",
         "dependencies": {
           "System.Memory": "4.5.3"
         },
         "compile": {
-          "lib/netstandard2.0/Grpc.Core.Api.dll": {
+          "lib/netstandard2.1/Grpc.Core.Api.dll": {
             "related": ".pdb;.xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/Grpc.Core.Api.dll": {
+          "lib/netstandard2.1/Grpc.Core.Api.dll": {
             "related": ".pdb;.xml"
           }
         }
       },
-      "Grpc.Net.Client/2.40.0": {
+      "Grpc.Net.Client/2.50.0": {
         "type": "package",
         "dependencies": {
-          "Grpc.Net.Common": "2.40.0",
+          "Grpc.Net.Common": "2.50.0",
           "Microsoft.Extensions.Logging.Abstractions": "3.0.3"
         },
         "compile": {
@@ -101,10 +146,10 @@
           }
         }
       },
-      "Grpc.Net.ClientFactory/2.40.0": {
+      "Grpc.Net.ClientFactory/2.50.0": {
         "type": "package",
         "dependencies": {
-          "Grpc.Net.Client": "2.40.0",
+          "Grpc.Net.Client": "2.50.0",
           "Microsoft.Extensions.Http": "3.0.3"
         },
         "compile": {
@@ -118,10 +163,10 @@
           }
         }
       },
-      "Grpc.Net.Common/2.40.0": {
+      "Grpc.Net.Common/2.50.0": {
         "type": "package",
         "dependencies": {
-          "Grpc.Core.Api": "2.40.0"
+          "Grpc.Core.Api": "2.50.0"
         },
         "compile": {
           "lib/net6.0/Grpc.Net.Common.dll": {
@@ -134,7 +179,7 @@
           }
         }
       },
-      "Grpc.Tools/2.40.0": {
+      "Grpc.Tools/2.50.0": {
         "type": "package",
         "build": {
           "build/Grpc.Tools.props": {},
@@ -310,14 +355,14 @@
     }
   },
   "libraries": {
-    "Google.Protobuf/3.18.0": {
-      "sha512": "Jm6+nppUm9LD+XVsLFkf1YyVlAKsG5gq+Hc/Rn3Zi2pDObBI6PCH/eHBFUJdARl40DpczEdHlV3+WTPOGIXetg==",
+    "Google.Protobuf/3.21.5": {
+      "sha512": "d7zwRm0edg2cxqRynMD31F8HUUyicBT0l5M74EIsU6GAaq3dxxaZ/PpSPlso010W9nIXoVVKUYZSsiOspAOO/A==",
       "type": "package",
-      "path": "google.protobuf/3.18.0",
+      "path": "google.protobuf/3.21.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "google.protobuf.3.18.0.nupkg.sha512",
+        "google.protobuf.3.21.5.nupkg.sha512",
         "google.protobuf.nuspec",
         "lib/net45/Google.Protobuf.dll",
         "lib/net45/Google.Protobuf.pdb",
@@ -333,29 +378,44 @@
         "lib/netstandard2.0/Google.Protobuf.xml"
       ]
     },
-    "Grpc.AspNetCore/2.40.0": {
-      "sha512": "UdyFzZZbzugtoGfjGAY9bVq/1l7m3SvGGXd5VCqw7xr4QA4BVEozr1Vr6FFxUOPVvg91g5dwssbsM/Xl1MpecQ==",
+    "Grpc/2.46.5": {
+      "sha512": "Pk3ADAEurkJx3xjWGS0jcKqPhjMwMakaOE73wpOITQn+jUS1EXgXMSuysorDdmfIJMfiXYYzZdnKcfX7/Efbcg==",
       "type": "package",
-      "path": "grpc.aspnetcore/2.40.0",
+      "path": "grpc/2.46.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.aspnetcore.2.40.0.nupkg.sha512",
+        "grpc.2.46.5.nupkg.sha512",
+        "grpc.nuspec",
+        "packageIcon.png"
+      ]
+    },
+    "Grpc.AspNetCore/2.50.0": {
+      "sha512": "EGjmBZbpgpU8PDI1dDAcmWFnDzIYekcKh0X3aUk7+0P2XK0lv3UMJsHF9vrC+MJEiTMBoyzWcGP7FCAzg3hS+w==",
+      "type": "package",
+      "path": "grpc.aspnetcore/2.50.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "grpc.aspnetcore.2.50.0.nupkg.sha512",
         "grpc.aspnetcore.nuspec",
         "lib/net5.0/_._",
         "lib/net6.0/_._",
+        "lib/net7.0/_._",
         "lib/netcoreapp3.0/_._",
         "packageIcon.png"
       ]
     },
-    "Grpc.AspNetCore.Server/2.40.0": {
-      "sha512": "cBSpT42syKkVnTBEehk+Sc2dX5sDO2lP+5o4ylFnup+JHPntbewTx5QHHizWPRTKTwWDe4EXR4rR1ilgf6eTnQ==",
+    "Grpc.AspNetCore.Server/2.50.0": {
+      "sha512": "jCpnLaamT4tNM3coPLHZYdGz2Gx5Ly5giAXmvluPEB/kNiz7f3wu0fUlDKNH3AlOglwStUmztnH3GHCbFtzOhA==",
       "type": "package",
-      "path": "grpc.aspnetcore.server/2.40.0",
+      "path": "grpc.aspnetcore.server/2.50.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.aspnetcore.server.2.40.0.nupkg.sha512",
+        "README.md",
+        "grpc.aspnetcore.server.2.50.0.nupkg.sha512",
         "grpc.aspnetcore.server.nuspec",
         "lib/net5.0/Grpc.AspNetCore.Server.dll",
         "lib/net5.0/Grpc.AspNetCore.Server.pdb",
@@ -363,20 +423,23 @@
         "lib/net6.0/Grpc.AspNetCore.Server.dll",
         "lib/net6.0/Grpc.AspNetCore.Server.pdb",
         "lib/net6.0/Grpc.AspNetCore.Server.xml",
+        "lib/net7.0/Grpc.AspNetCore.Server.dll",
+        "lib/net7.0/Grpc.AspNetCore.Server.pdb",
+        "lib/net7.0/Grpc.AspNetCore.Server.xml",
         "lib/netcoreapp3.0/Grpc.AspNetCore.Server.dll",
         "lib/netcoreapp3.0/Grpc.AspNetCore.Server.pdb",
         "lib/netcoreapp3.0/Grpc.AspNetCore.Server.xml",
         "packageIcon.png"
       ]
     },
-    "Grpc.AspNetCore.Server.ClientFactory/2.40.0": {
-      "sha512": "U+Cp5Mt7/xjFRIJhChjLXn0oUDisaBg3XzFkAUZE32dAa/dQN2gs9Qd9Gl51deStbci3J+W7CcfHgZ0y2Fwblw==",
+    "Grpc.AspNetCore.Server.ClientFactory/2.50.0": {
+      "sha512": "f+yTzIM/3ilJjK9lZ1YIorErOVbB7t8J3kHSkB8vbF44mKUoGB2bWu7Ud7U3D3SjgJpC/61LBTwAljwZfKQx/Q==",
       "type": "package",
-      "path": "grpc.aspnetcore.server.clientfactory/2.40.0",
+      "path": "grpc.aspnetcore.server.clientfactory/2.50.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.aspnetcore.server.clientfactory.2.40.0.nupkg.sha512",
+        "grpc.aspnetcore.server.clientfactory.2.50.0.nupkg.sha512",
         "grpc.aspnetcore.server.clientfactory.nuspec",
         "lib/net5.0/Grpc.AspNetCore.Server.ClientFactory.dll",
         "lib/net5.0/Grpc.AspNetCore.Server.ClientFactory.pdb",
@@ -384,40 +447,77 @@
         "lib/net6.0/Grpc.AspNetCore.Server.ClientFactory.dll",
         "lib/net6.0/Grpc.AspNetCore.Server.ClientFactory.pdb",
         "lib/net6.0/Grpc.AspNetCore.Server.ClientFactory.xml",
+        "lib/net7.0/Grpc.AspNetCore.Server.ClientFactory.dll",
+        "lib/net7.0/Grpc.AspNetCore.Server.ClientFactory.pdb",
+        "lib/net7.0/Grpc.AspNetCore.Server.ClientFactory.xml",
         "lib/netcoreapp3.0/Grpc.AspNetCore.Server.ClientFactory.dll",
         "lib/netcoreapp3.0/Grpc.AspNetCore.Server.ClientFactory.pdb",
         "lib/netcoreapp3.0/Grpc.AspNetCore.Server.ClientFactory.xml",
         "packageIcon.png"
       ]
     },
-    "Grpc.Core.Api/2.40.0": {
-      "sha512": "Ig3ioHBMDl8jZzPRU+t8GPpgDBYkjwupHzSVswwrsUVZdO5SThmYY4fHftNC1rMCjsjVvUMQ/o1NCf1CT4Y+rA==",
+    "Grpc.Core/2.46.5": {
+      "sha512": "bD35LTppXYmRvymX6rV+mqc2wZcZf8o0fYkEJ414cul1RiGRWTeVWOtDC94CaTGG2Ie/XoLTd347bnBB5vHaGQ==",
       "type": "package",
-      "path": "grpc.core.api/2.40.0",
+      "path": "grpc.core/2.46.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.core.api.2.40.0.nupkg.sha512",
+        "build/net45/Grpc.Core.targets",
+        "buildTransitive/net45/Grpc.Core.targets",
+        "grpc.core.2.46.5.nupkg.sha512",
+        "grpc.core.nuspec",
+        "lib/net45/Grpc.Core.dll",
+        "lib/net45/Grpc.Core.pdb",
+        "lib/net45/Grpc.Core.xml",
+        "lib/netstandard1.5/Grpc.Core.dll",
+        "lib/netstandard1.5/Grpc.Core.pdb",
+        "lib/netstandard1.5/Grpc.Core.xml",
+        "lib/netstandard2.0/Grpc.Core.dll",
+        "lib/netstandard2.0/Grpc.Core.pdb",
+        "lib/netstandard2.0/Grpc.Core.xml",
+        "packageIcon.png",
+        "runtimes/linux-arm64/native/libgrpc_csharp_ext.arm64.so",
+        "runtimes/linux-x64/native/libgrpc_csharp_ext.x64.so",
+        "runtimes/osx-x64/native/libgrpc_csharp_ext.x64.dylib",
+        "runtimes/win-x64/native/grpc_csharp_ext.x64.dll",
+        "runtimes/win-x86/native/grpc_csharp_ext.x86.dll"
+      ]
+    },
+    "Grpc.Core.Api/2.50.0": {
+      "sha512": "ECZr0AqUobCIfxPYm07D/IqMbGd+Vu9KquRLLY1kMzc/xWZdqqiK0jA6t6Y5gate3lV4EiH53cvfcb6anritQg==",
+      "type": "package",
+      "path": "grpc.core.api/2.50.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "grpc.core.api.2.50.0.nupkg.sha512",
         "grpc.core.api.nuspec",
-        "lib/net45/Grpc.Core.Api.dll",
-        "lib/net45/Grpc.Core.Api.pdb",
-        "lib/net45/Grpc.Core.Api.xml",
+        "lib/net462/Grpc.Core.Api.dll",
+        "lib/net462/Grpc.Core.Api.pdb",
+        "lib/net462/Grpc.Core.Api.xml",
         "lib/netstandard1.5/Grpc.Core.Api.dll",
         "lib/netstandard1.5/Grpc.Core.Api.pdb",
         "lib/netstandard1.5/Grpc.Core.Api.xml",
         "lib/netstandard2.0/Grpc.Core.Api.dll",
         "lib/netstandard2.0/Grpc.Core.Api.pdb",
-        "lib/netstandard2.0/Grpc.Core.Api.xml"
+        "lib/netstandard2.0/Grpc.Core.Api.xml",
+        "lib/netstandard2.1/Grpc.Core.Api.dll",
+        "lib/netstandard2.1/Grpc.Core.Api.pdb",
+        "lib/netstandard2.1/Grpc.Core.Api.xml",
+        "packageIcon.png"
       ]
     },
-    "Grpc.Net.Client/2.40.0": {
-      "sha512": "+Z+onJ5jOLwKR41wROs+I1Bo6+NKT9ov/moXZCi9vH7aDRVQuqhmfALoxWdsNUNO9Bl3A/VzmfPB2jxZB4B1WQ==",
+    "Grpc.Net.Client/2.50.0": {
+      "sha512": "FEQ4KdsIlknEH/8z64Im5soEdVYsHBShIGSS3CUS+KXxdtL6/uNhYx4CBE+SXoGofvetwR/dW9QGmBXu3v+enQ==",
       "type": "package",
-      "path": "grpc.net.client/2.40.0",
+      "path": "grpc.net.client/2.50.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.net.client.2.40.0.nupkg.sha512",
+        "README.md",
+        "grpc.net.client.2.50.0.nupkg.sha512",
         "grpc.net.client.nuspec",
         "lib/net5.0/Grpc.Net.Client.dll",
         "lib/net5.0/Grpc.Net.Client.pdb",
@@ -425,6 +525,9 @@
         "lib/net6.0/Grpc.Net.Client.dll",
         "lib/net6.0/Grpc.Net.Client.pdb",
         "lib/net6.0/Grpc.Net.Client.xml",
+        "lib/net7.0/Grpc.Net.Client.dll",
+        "lib/net7.0/Grpc.Net.Client.pdb",
+        "lib/net7.0/Grpc.Net.Client.xml",
         "lib/netstandard2.0/Grpc.Net.Client.dll",
         "lib/netstandard2.0/Grpc.Net.Client.pdb",
         "lib/netstandard2.0/Grpc.Net.Client.xml",
@@ -434,14 +537,15 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.Net.ClientFactory/2.40.0": {
-      "sha512": "B2ZzZpkaSH7AvTeu3jF3PAbumWEtHvB9qHX/ULU4AuN4lZwXiQF+G6jatZerXpVqTb4mzQ2wFhKkThYyVMN4uw==",
+    "Grpc.Net.ClientFactory/2.50.0": {
+      "sha512": "DPe+EXSu2mPT3pd7hASc8rtaItnHeL34BR5PabdFi0D5KnZI62VtbLL7ki8Rbv1eeatkUn17ANONhjYlBgxntw==",
       "type": "package",
-      "path": "grpc.net.clientfactory/2.40.0",
+      "path": "grpc.net.clientfactory/2.50.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.net.clientfactory.2.40.0.nupkg.sha512",
+        "README.md",
+        "grpc.net.clientfactory.2.50.0.nupkg.sha512",
         "grpc.net.clientfactory.nuspec",
         "lib/net5.0/Grpc.Net.ClientFactory.dll",
         "lib/net5.0/Grpc.Net.ClientFactory.pdb",
@@ -449,6 +553,9 @@
         "lib/net6.0/Grpc.Net.ClientFactory.dll",
         "lib/net6.0/Grpc.Net.ClientFactory.pdb",
         "lib/net6.0/Grpc.Net.ClientFactory.xml",
+        "lib/net7.0/Grpc.Net.ClientFactory.dll",
+        "lib/net7.0/Grpc.Net.ClientFactory.pdb",
+        "lib/net7.0/Grpc.Net.ClientFactory.xml",
         "lib/netstandard2.0/Grpc.Net.ClientFactory.dll",
         "lib/netstandard2.0/Grpc.Net.ClientFactory.pdb",
         "lib/netstandard2.0/Grpc.Net.ClientFactory.xml",
@@ -458,14 +565,14 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.Net.Common/2.40.0": {
-      "sha512": "nj5XotYmzAT4UlGyOK6xWacPp2nODupQvlbeA2qqu9F47BIr+vze6+psJ9gSgED2HeTVBXuc+vdKrUXzk0ErMQ==",
+    "Grpc.Net.Common/2.50.0": {
+      "sha512": "xRoZfo74Cgrr/c/4Y6YCyCiKxz5JLMAi8c9nPhy1vrNXvNjj2Sdd/kSySi9VlZZbMHoDBTcn5ZlPumDPDirnHw==",
       "type": "package",
-      "path": "grpc.net.common/2.40.0",
+      "path": "grpc.net.common/2.50.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "grpc.net.common.2.40.0.nupkg.sha512",
+        "grpc.net.common.2.50.0.nupkg.sha512",
         "grpc.net.common.nuspec",
         "lib/net5.0/Grpc.Net.Common.dll",
         "lib/net5.0/Grpc.Net.Common.pdb",
@@ -473,6 +580,9 @@
         "lib/net6.0/Grpc.Net.Common.dll",
         "lib/net6.0/Grpc.Net.Common.pdb",
         "lib/net6.0/Grpc.Net.Common.xml",
+        "lib/net7.0/Grpc.Net.Common.dll",
+        "lib/net7.0/Grpc.Net.Common.pdb",
+        "lib/net7.0/Grpc.Net.Common.xml",
         "lib/netstandard2.0/Grpc.Net.Common.dll",
         "lib/netstandard2.0/Grpc.Net.Common.pdb",
         "lib/netstandard2.0/Grpc.Net.Common.xml",
@@ -482,10 +592,10 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.Tools/2.40.0": {
-      "sha512": "yOAhijs6POv7oISBV9Rdx5YCSdo/+6zCJTB/ULum3GA4RunxVFI0rPnpJM1+YM9yMf+H1/D001ignsepnygPJw==",
+    "Grpc.Tools/2.50.0": {
+      "sha512": "EPp2aQpoBOvzmhLqipNwk88nf3IVQ0G0DhdSlekYHGPOUCgtcqcEzD3OIWUfQPisSYxMY2HC1sQJm6Li1sVOTw==",
       "type": "package",
-      "path": "grpc.tools/2.40.0",
+      "path": "grpc.tools/2.50.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -514,8 +624,9 @@
         "build/native/include/google/protobuf/timestamp.proto",
         "build/native/include/google/protobuf/type.proto",
         "build/native/include/google/protobuf/wrappers.proto",
-        "grpc.tools.2.40.0.nupkg.sha512",
+        "grpc.tools.2.50.0.nupkg.sha512",
         "grpc.tools.nuspec",
+        "packageIcon.png",
         "tools/linux_arm64/grpc_csharp_plugin",
         "tools/linux_arm64/protoc",
         "tools/linux_x64/grpc_csharp_plugin",
@@ -712,7 +823,9 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Grpc.AspNetCore >= 2.40.0"
+      "Grpc >= 2.46.5",
+      "Grpc.AspNetCore >= 2.50.0",
+      "Grpc.Core >= 2.46.5"
     ]
   },
   "packageFolders": {
@@ -759,9 +872,17 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "Grpc": {
+            "target": "Package",
+            "version": "[2.46.5, )"
+          },
           "Grpc.AspNetCore": {
             "target": "Package",
-            "version": "[2.40.0, )"
+            "version": "[2.50.0, )"
+          },
+          "Grpc.Core": {
+            "target": "Package",
+            "version": "[2.46.5, )"
           }
         },
         "imports": [
