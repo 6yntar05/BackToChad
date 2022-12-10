@@ -34,6 +34,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <string>
 
 #include <grpc++/grpc++.h>
 
@@ -47,10 +48,14 @@ using rtcservice::Request;
 using rtcservice::Reply;
 using rtcservice::Greeter;
 
+std::string generateToken() {
+  return "0";
+}
+
 // Logic and data behind the server's behavior.
 class GreeterServiceImpl final : public Greeter::Service {
   Status GetSession(ServerContext* context, const Request* request, Reply* reply) override {
-    reply->set_token("TOKEN!!!!!!!");
+    reply->set_token(generateToken());
     return Status::OK;
   }
 };
