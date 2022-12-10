@@ -1,6 +1,28 @@
 project(WebRTCService)
 cmake_minimum_required(VERSION 3.2)
 
+### SUBMODULES ###
+function (submodules_update)
+    find_package(Git QUIET)
+    if (GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+        option(GIT_SUBMODULE "Check submodules during build" ON)
+        if (GIT_SUBMODULE)
+            message (">> Update submodules")
+            execute_process(
+                COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                RESULT_VARIABLE GIT_SUBMOD_RESULT
+            )
+            if (NOT GIT_SUBMOD_RESULT EQUAL "0")
+                message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+            endif ()
+        endif ()
+    endif ()
+endfunction ()
+submodules_update()
+
+add_subdirectory(./libs/libdatachannel)
+
 add_compile_options(-std=c++11)
 
 # GRPC and Protocol Buffers libraries location
@@ -27,6 +49,8 @@ include_directories(${PROTO_SRC_DIR})
 
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_SRC_DIR} ${PROTOS})
 grpc_generate_cpp(GRPC_SRCS GRPC_HDRS ${PROTO_SRC_DIR} ${PROTOS})
+
+#add_subdirectory(./libs/libdatachannel)
 
 # Building server
 add_executable(greeter_server
