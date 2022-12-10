@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService.Grpc";
+
+package users;
+
+service Users {
+  rpc CreateUser(CreateUserRequestDto) returns (CreateUserResponseDto);
+  rpc GetUsers(GetUsersRequestDto) returns (GetUsersResponseDto);
+}
+
+message CreateUserRequestDto {
+  string login = 1;
+  string password = 2;
+}
+
+message CreateUserResponseDto {
+  string id = 1;
+  string login = 2;
+  string errors = 3;
+}
+
+message GetUsersRequestDto {
+  
+}
+
+message GetUsersResponseDto {
+  repeated UserDto Users = 1;
+}
+
+message UserDto {
+  string id = 1;
+  string login = 2;
+}
