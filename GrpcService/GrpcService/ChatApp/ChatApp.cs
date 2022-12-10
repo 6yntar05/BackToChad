@@ -28,7 +28,7 @@ public class ChatApp
         return userSession;
     }
 
-    public async Task SendAsync(User user, Message chatMessage)
+    public async Task SendAsync(Guid userId, Message chatMessage)
     {
         using var scope = ServiceScopeFactory.CreateScope();
 
@@ -41,7 +41,7 @@ public class ChatApp
 
         try
         {
-            var userDb = await chatDbContext.Users.FirstAsync(u => u.Id == user.Id);
+            var userDb = await chatDbContext.Users.FirstAsync(u => u.Id == userId);
 
             chatMessage.User = userDb;
 

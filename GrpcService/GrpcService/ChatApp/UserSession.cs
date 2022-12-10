@@ -45,8 +45,8 @@ public class UserSession : IDisposable
 
         var chatDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        foreach (var chatMessage in chatDbContext.Messages) 
-            NewMessageSended?.Invoke(chatMessage);
+        foreach (var message in chatDbContext.Messages) 
+            MessageInvoked(message);
     }
 
     public void Dispose()
@@ -55,9 +55,13 @@ public class UserSession : IDisposable
         _chatApp = null!;
     }
 
-    public void MessageInvoked(Message chatMessage)
+    public void MessageInvoked(Message message)
     {
-        NewMessageSended?.Invoke(chatMessage);
+        NewMessageSended?.Invoke(new ChatMessage
+        {
+            IdChat = message.ChatId.ToString(),
+            Message = message.TextBody
+        });
     }
 
     #endregion

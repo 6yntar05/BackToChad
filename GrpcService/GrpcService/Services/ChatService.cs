@@ -3,6 +3,7 @@ using GrpcService.Db;
 using GrpcService.Db.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 //GrpcService.Services
 namespace GrpcService.Services
@@ -18,9 +19,12 @@ namespace GrpcService.Services
         private readonly ILogger<ChatMessage> _logger;
 
 
-        public ChatService(AppDbContext appDbContext)
+        public ChatService(AppDbContext appDbContext, UserManager<User> userManager, ChatApp chatroomService, ILogger<ChatMessage> logger)
         {
             _appDbContext = appDbContext;
+            _userManager = userManager;
+            _chatroomService = chatroomService;
+            _logger = logger;
         }
    
 
@@ -49,7 +53,7 @@ namespace GrpcService.Services
             IServerStreamWriter<ChatMessage> responseStream, 
             ServerCallContext context)
         {
-            var user = await _userManager.GetUserAsync(context.GetHttpContext().User);
+            var user = await _userManager.Users.FirstAsync();
             var session = _chatroomService.JoinUser(user);
             _resposonceStream = responseStream;
             session.NewMessageSended += SessionOnNewMessageSended;
@@ -78,16 +82,16 @@ namespace GrpcService.Services
 
         public override async Task<ChatRequest> Send(ChatMessage request, ServerCallContext context)
         {
-            var user = await _userManager.GetUserAsync(context.GetHttpContext().User);
-
+            var userId = Guid.Parse(context.GetHttpContext().User.Claims.First(x => x.Type == "Id").Value);
             var chatMessage = new Message
             {
                 Id = Guid.NewGuid(),
-                User = user,
-                ChatId = Guid.Parse(request.IdChat)
+                AuthorId = userId,
+                ChatId = Guid.Parse(request.IdChat),
+                TextBody = request.Message
             };
 
-            await _chatroomService.SendAsync(user, chatMessage);
+            await _chatroomService.SendAsync(userId, chatMessage);
 
             return new ChatRequest();
         }

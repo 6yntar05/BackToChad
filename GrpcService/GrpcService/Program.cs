@@ -38,6 +38,8 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
     optionsBuilder.UseNpgsql(connectionString);
 });
 
+builder.Services.AddSingleton<ChatApp>();
+
 // Add services to the container.
 builder.Services.AddGrpc();
 
