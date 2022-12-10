@@ -3,6 +3,7 @@ using GrpcService.Db;
 using GrpcService.Db.Entities;
 using GrpcService.Grpc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace GrpcService.Services;
 
@@ -10,11 +11,12 @@ public class UsersService: Grpc.Users.UsersBase
 {
     private readonly AppDbContext _appDbContext;
     private readonly UserManager<User> _userManager;
-
-    public UsersService(AppDbContext appDbContext, UserManager<User> userManager)
+    private readonly ILogger<User> _logger;
+    public UsersService(AppDbContext appDbContext, UserManager<User> userManager, ILogger<User> logger)
     {
         _appDbContext = appDbContext;
         _userManager = userManager;
+        _logger = logger;
     }
 
     public override async Task<Grpc.CreateUserResponseDto> CreateUser(Grpc.CreateUserRequestDto request, ServerCallContext context)

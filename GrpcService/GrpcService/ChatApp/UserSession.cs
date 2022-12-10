@@ -1,4 +1,5 @@
 ﻿
+using GrpcService;
 using GrpcService.Db;
 using GrpcService.Db.Entities;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,7 @@ public class UserSession : IDisposable
 
     #region Events
 
-    public event Action<Message>? NewMessageSended;
+    public event Action<ChatMessage>? NewMessageSended;
 
     #endregion
 

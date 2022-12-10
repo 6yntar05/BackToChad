@@ -14,8 +14,8 @@ namespace GrpcService.Services
         //User 
         private readonly UserManager<User> _userManager;
         //gRPC ServerStream
-        private IServerStreamWriter<Message> _resposonceStream = null;
-
+        private IServerStreamWriter<ChatMessage> _resposonceStream = null;
+        private readonly ILogger<ChatMessage> _logger;
 
 
         public ChatService(AppDbContext appDbContext)
@@ -31,6 +31,7 @@ namespace GrpcService.Services
             {
                 Id = Guid.NewGuid(),
                 Name = request.Name
+
             };
 
             _appDbContext.Add(chat);
@@ -49,10 +50,56 @@ namespace GrpcService.Services
             ServerCallContext context)
         {
             var user = await _userManager.GetUserAsync(context.GetHttpContext().User);
-            Guid session = _chatroomService.JoinUser(user);
+            var session = _chatroomService.JoinUser(user);
+            _resposonceStream = responseStream;
+            session.NewMessageSended += SessionOnNewMessageSended;
+            session.Init();
 
+            try
+            {
+                await Task.Delay(int.MaxValue, context.CancellationToken);
+            }
+            catch (TaskCanceledException e)
+            {
+                _logger.Log(LogLevel.Information, e, "ChatRoomService.JoinChat.Cancelled");
+            }
+            catch (Exception e)
+            {
+                _logger.Log(LogLevel.Error, e, "ChatRoomService.JoinChat");
+            }
+            finally
+            {
+                session.NewMessageSended -= SessionOnNewMessageSended;
 
+                session.Dispose();
+                _resposonceStream = null!;
+            }
         }
-            
+
+        public override async Task<ChatRequest> Send(ChatMessage request, ServerCallContext context)
+        {
+            var user = await _userManager.GetUserAsync(context.GetHttpContext().User);
+
+            var chatMessage = new Message
+            {
+                Id = Guid.NewGuid(),
+                User = user,
+                ChatId = Guid.Parse(request.IdChat)
+            };
+
+            await _chatroomService.SendAsync(user, chatMessage);
+
+            return new ChatRequest();
+        }
+
+        #region Private Methods
+
+        private async void SessionOnNewMessageSended(ChatMessage message)
+        {
+            await _resposonceStream.WriteAsync(new ChatMessage { Message = message.Message });
+        }
+
+        #endregion
+
     }
 }

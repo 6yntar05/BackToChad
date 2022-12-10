@@ -12,6 +12,7 @@ service ChatRoom {
 
 message ChatMessage {
   string message = 1;
+  string id_chat = 2;
 }
 message ChatRequest{
 
