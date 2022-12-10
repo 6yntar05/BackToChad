@@ -5,13 +5,16 @@ option csharp_namespace = "GrpcService";
 package greet;
 
 service ChatRoom {
-  rpc join(stream Message) returns (stream Message);
+  rpc JoinChat(ChatRequest) returns (stream ChatMessage);
   rpc CreateChat(CreateChatRequestDto) returns (CreateChatResponseDto);
+  rpc Send(ChatMessage) returns (ChatRequest);
 }
 
-message Message {
-  string user = 1;
-  string text = 2;
+message ChatMessage {
+  string message = 1;
+}
+message ChatRequest{
+
 }
 
 message CreateChatRequestDto {
