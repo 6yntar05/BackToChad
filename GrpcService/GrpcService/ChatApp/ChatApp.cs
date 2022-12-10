@@ -11,7 +11,7 @@ public class ChatApp
 {
     internal IServiceScopeFactory ServiceScopeFactory;
     internal ILogger<ChatApp> Logger;
-    internal List<UserSession> Sessions = new();
+    internal Dictionary<Guid,List<UserSession>> Sessions = new();
 
     public ChatApp(IServiceScopeFactory scopeFactory, ILogger<ChatApp> logger)
     {
@@ -19,13 +19,19 @@ public class ChatApp
         Logger = logger;
     }
 
-    public UserSession JoinUser(User user)
+    public UserSession JoinUser(User user, Chat chat)
     {
         var userSession = new UserSession(this, user.Id);
-
-        Sessions.Add(userSession);
-
-        return userSession;
+        bool sessionsCneck = Sessions.TryGetValue(chat.Id,out var sessions);
+         if (!sessionsCneck)
+            {
+            //Хранение Сесиий
+            List <UserSession> sessions1 = new List<UserSession>();
+            sessions1.Add(userSession);
+            Sessions.Add(chat.Id, sessions1);
+        }
+  
+        return userSession;  
     }
 
     public async Task SendAsync(Guid userId, Message chatMessage)
@@ -34,7 +40,8 @@ public class ChatApp
 
         var chatDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        foreach (var session in Sessions)
+        bool Collections = Sessions.TryGetValue(chatMessage.Id,out var userSessions);
+        foreach (var session in userSessions)
         {
             session.MessageInvoked(chatMessage);
         }

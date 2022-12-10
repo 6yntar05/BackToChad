@@ -28,4 +28,3 @@ export const checkLogin = async (token) => {
 
     return resp;
 }
-

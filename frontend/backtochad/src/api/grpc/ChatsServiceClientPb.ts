@@ -8,7 +8,7 @@
 // versions:
 // 	protoc-gen-grpc-web v1.4.1
 // 	protoc              v3.16.3
-// source: greet.proto
+// source: chats.proto
 
 
 /* eslint-disable */
@@ -17,7 +17,7 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as greet_pb from './greet_pb';
+import * as chats_pb from './chats_pb';
 
 
 export class ChatRoomClient {
@@ -42,29 +42,29 @@ export class ChatRoomClient {
   methodDescriptorSend = new grpcWeb.MethodDescriptor(
     '/greet.ChatRoom/Send',
     grpcWeb.MethodType.UNARY,
-    greet_pb.ChatMessage,
-    greet_pb.ChatRequest,
-    (request: greet_pb.ChatMessage) => {
+    chats_pb.ChatMessage,
+    chats_pb.ChatRequest,
+    (request: chats_pb.ChatMessage) => {
       return request.serializeBinary();
     },
-    greet_pb.ChatRequest.deserializeBinary
+    chats_pb.ChatRequest.deserializeBinary
   );
 
   send(
-    request: greet_pb.ChatMessage,
-    metadata: grpcWeb.Metadata | null): Promise<greet_pb.ChatRequest>;
+    request: chats_pb.ChatMessage,
+    metadata: grpcWeb.Metadata | null): Promise<chats_pb.ChatRequest>;
 
   send(
-    request: greet_pb.ChatMessage,
+    request: chats_pb.ChatMessage,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: greet_pb.ChatRequest) => void): grpcWeb.ClientReadableStream<greet_pb.ChatRequest>;
+               response: chats_pb.ChatRequest) => void): grpcWeb.ClientReadableStream<chats_pb.ChatRequest>;
 
   send(
-    request: greet_pb.ChatMessage,
+    request: chats_pb.ChatMessage,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: greet_pb.ChatRequest) => void) {
+               response: chats_pb.ChatRequest) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -85,17 +85,17 @@ export class ChatRoomClient {
   methodDescriptorJoinChat = new grpcWeb.MethodDescriptor(
     '/greet.ChatRoom/JoinChat',
     grpcWeb.MethodType.SERVER_STREAMING,
-    greet_pb.ChatRequest,
-    greet_pb.ChatMessage,
-    (request: greet_pb.ChatRequest) => {
+    chats_pb.ChatRequest,
+    chats_pb.ChatMessage,
+    (request: chats_pb.ChatRequest) => {
       return request.serializeBinary();
     },
-    greet_pb.ChatMessage.deserializeBinary
+    chats_pb.ChatMessage.deserializeBinary
   );
 
   joinChat(
-    request: greet_pb.ChatRequest,
-    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<greet_pb.ChatMessage> {
+    request: chats_pb.ChatRequest,
+    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<chats_pb.ChatMessage> {
     return this.client_.serverStreaming(
       this.hostname_ +
         '/greet.ChatRoom/JoinChat',
@@ -107,29 +107,29 @@ export class ChatRoomClient {
   methodDescriptorCreateChat = new grpcWeb.MethodDescriptor(
     '/greet.ChatRoom/CreateChat',
     grpcWeb.MethodType.UNARY,
-    greet_pb.CreateChatRequestDto,
-    greet_pb.CreateChatResponseDto,
-    (request: greet_pb.CreateChatRequestDto) => {
+    chats_pb.CreateChatRequestDto,
+    chats_pb.CreateChatResponseDto,
+    (request: chats_pb.CreateChatRequestDto) => {
       return request.serializeBinary();
     },
-    greet_pb.CreateChatResponseDto.deserializeBinary
+    chats_pb.CreateChatResponseDto.deserializeBinary
   );
 
   createChat(
-    request: greet_pb.CreateChatRequestDto,
-    metadata: grpcWeb.Metadata | null): Promise<greet_pb.CreateChatResponseDto>;
+    request: chats_pb.CreateChatRequestDto,
+    metadata: grpcWeb.Metadata | null): Promise<chats_pb.CreateChatResponseDto>;
 
   createChat(
-    request: greet_pb.CreateChatRequestDto,
+    request: chats_pb.CreateChatRequestDto,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: greet_pb.CreateChatResponseDto) => void): grpcWeb.ClientReadableStream<greet_pb.CreateChatResponseDto>;
+               response: chats_pb.CreateChatResponseDto) => void): grpcWeb.ClientReadableStream<chats_pb.CreateChatResponseDto>;
 
   createChat(
-    request: greet_pb.CreateChatRequestDto,
+    request: chats_pb.CreateChatRequestDto,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: greet_pb.CreateChatResponseDto) => void) {
+               response: chats_pb.CreateChatResponseDto) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -150,29 +150,29 @@ export class ChatRoomClient {
   methodDescriptorAddUserToChat = new grpcWeb.MethodDescriptor(
     '/greet.ChatRoom/AddUserToChat',
     grpcWeb.MethodType.UNARY,
-    greet_pb.AddUserToChatRequestDto,
-    greet_pb.AddUserToChatResponseDto,
-    (request: greet_pb.AddUserToChatRequestDto) => {
+    chats_pb.AddUserToChatRequestDto,
+    chats_pb.AddUserToChatResponseDto,
+    (request: chats_pb.AddUserToChatRequestDto) => {
       return request.serializeBinary();
     },
-    greet_pb.AddUserToChatResponseDto.deserializeBinary
+    chats_pb.AddUserToChatResponseDto.deserializeBinary
   );
 
   addUserToChat(
-    request: greet_pb.AddUserToChatRequestDto,
-    metadata: grpcWeb.Metadata | null): Promise<greet_pb.AddUserToChatResponseDto>;
+    request: chats_pb.AddUserToChatRequestDto,
+    metadata: grpcWeb.Metadata | null): Promise<chats_pb.AddUserToChatResponseDto>;
 
   addUserToChat(
-    request: greet_pb.AddUserToChatRequestDto,
+    request: chats_pb.AddUserToChatRequestDto,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: greet_pb.AddUserToChatResponseDto) => void): grpcWeb.ClientReadableStream<greet_pb.AddUserToChatResponseDto>;
+               response: chats_pb.AddUserToChatResponseDto) => void): grpcWeb.ClientReadableStream<chats_pb.AddUserToChatResponseDto>;
 
   addUserToChat(
-    request: greet_pb.AddUserToChatRequestDto,
+    request: chats_pb.AddUserToChatRequestDto,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: greet_pb.AddUserToChatResponseDto) => void) {
+               response: chats_pb.AddUserToChatResponseDto) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
@@ -193,29 +193,29 @@ export class ChatRoomClient {
   methodDescriptorGetChats = new grpcWeb.MethodDescriptor(
     '/greet.ChatRoom/GetChats',
     grpcWeb.MethodType.UNARY,
-    greet_pb.GetChatsRequestDto,
-    greet_pb.GetChatsResponseDto,
-    (request: greet_pb.GetChatsRequestDto) => {
+    chats_pb.GetChatsRequestDto,
+    chats_pb.GetChatsResponseDto,
+    (request: chats_pb.GetChatsRequestDto) => {
       return request.serializeBinary();
     },
-    greet_pb.GetChatsResponseDto.deserializeBinary
+    chats_pb.GetChatsResponseDto.deserializeBinary
   );
 
   getChats(
-    request: greet_pb.GetChatsRequestDto,
-    metadata: grpcWeb.Metadata | null): Promise<greet_pb.GetChatsResponseDto>;
+    request: chats_pb.GetChatsRequestDto,
+    metadata: grpcWeb.Metadata | null): Promise<chats_pb.GetChatsResponseDto>;
 
   getChats(
-    request: greet_pb.GetChatsRequestDto,
+    request: chats_pb.GetChatsRequestDto,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: greet_pb.GetChatsResponseDto) => void): grpcWeb.ClientReadableStream<greet_pb.GetChatsResponseDto>;
+               response: chats_pb.GetChatsResponseDto) => void): grpcWeb.ClientReadableStream<chats_pb.GetChatsResponseDto>;
 
   getChats(
-    request: greet_pb.GetChatsRequestDto,
+    request: chats_pb.GetChatsRequestDto,
     metadata: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: greet_pb.GetChatsResponseDto) => void) {
+               response: chats_pb.GetChatsResponseDto) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
