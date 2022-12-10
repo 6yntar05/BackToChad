@@ -22,7 +22,8 @@ const App = () => {
   return (<Container className="p-3">
     <Container className="p-5 mb-4 bg-light rounded-3">
       <h1 className="header">Добро пожаловать в чат BackToChad</h1>
-      {!token?<Login onLogin={ onLogin }/>:<Card />}
+      {/* {!token?<Login onLogin={ onLogin }/>:<Card />} */}
+      <Card />
     </Container>
   </Container>)
 };
