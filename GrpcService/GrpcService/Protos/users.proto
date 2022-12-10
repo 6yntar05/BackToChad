@@ -6,6 +6,7 @@ package users;
 
 service Users {
   rpc CreateUser(CreateUserRequestDto) returns (CreateUserResponseDto);
+  rpc GetUsers(GetUsersRequestDto) returns (GetUsersResponseDto);
 }
 
 message CreateUserRequestDto {
@@ -17,4 +18,17 @@ message CreateUserResponseDto {
   string id = 1;
   string login = 2;
   string errors = 3;
+}
+
+message GetUsersRequestDto {
+  
+}
+
+message GetUsersResponseDto {
+  repeated UserDto Users = 1;
+}
+
+message UserDto {
+  string id = 1;
+  string login = 2;
 }

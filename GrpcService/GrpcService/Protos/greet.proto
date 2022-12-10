@@ -7,6 +7,8 @@ package greet;
 service ChatRoom {
   rpc join(stream Message) returns (stream Message);
   rpc CreateChat(CreateChatRequestDto) returns (CreateChatResponseDto);
+  rpc AddUserToChat(AddUserToChatRequestDto) returns (AddUserToChatResponseDto);
+  rpc GetChats(GetChatsRequestDto) returns (GetChatsResponseDto);
 }
 
 message Message {
@@ -21,6 +23,25 @@ message CreateChatRequestDto {
 message CreateChatResponseDto {
   string id = 1;
   string name = 2;
+}
+
+message AddUserToChatRequestDto {
+  string userId = 1;
+  string chatId = 2;
+}
+
+message AddUserToChatResponseDto {
+  string Error = 1;
+}
+
+message ChatDto {
+  string id = 1;
+  string name = 2;
+}
+
+message GetChatsRequestDto {}
+message GetChatsResponseDto {
+  repeated ChatDto Chats = 1;
 }
 
 service Auth {

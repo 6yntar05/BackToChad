@@ -1,8 +1,10 @@
-﻿using Grpc.Core;
+﻿using Google.Protobuf.Collections;
+using Grpc.Core;
 using GrpcService.Db;
 using GrpcService.Db.Entities;
 using GrpcService.Grpc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace GrpcService.Services;
 
@@ -40,5 +42,19 @@ public class UsersService: Grpc.Users.UsersBase
             Id = user.Id.ToString(),
             Login = user.UserName,
         };
+    }
+
+    public override async Task<GetUsersResponseDto> GetUsers(GetUsersRequestDto request, ServerCallContext context)
+    {
+        var users = await _userManager.Users.ToListAsync();
+        var repeatedField = new RepeatedField<UserDto>();
+
+        var responseDto = new GetUsersResponseDto();
+        responseDto.Users.AddRange(users.Select(x => new UserDto
+        {
+            Id = x.Id.ToString(),
+            Login = x.UserName,
+        }));
+        return responseDto;
     }
 }
