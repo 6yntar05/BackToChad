@@ -32,3 +32,20 @@ message UserDto {
   string id = 1;
   string login = 2;
 }
+
+service Auth {
+  rpc Login (LoginRequestDto) returns (LoginResponseDto);
+  rpc Check (CheckRequestDto) returns (UserDto);
+}
+
+message CheckRequestDto {}
+
+message LoginRequestDto {
+  string login = 1;
+  string password = 2;
+}
+
+message LoginResponseDto {
+  string token = 1;
+  string error = 2;
+}

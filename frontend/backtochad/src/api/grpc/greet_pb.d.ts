@@ -2,25 +2,39 @@ import * as jspb from 'google-protobuf'
 
 
 
-export class Message extends jspb.Message {
-  getUser(): string;
-  setUser(value: string): Message;
+export class ChatMessage extends jspb.Message {
+  getMessage(): string;
+  setMessage(value: string): ChatMessage;
 
-  getText(): string;
-  setText(value: string): Message;
+  getIdChat(): string;
+  setIdChat(value: string): ChatMessage;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): Message.AsObject;
-  static toObject(includeInstance: boolean, msg: Message): Message.AsObject;
-  static serializeBinaryToWriter(message: Message, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): Message;
-  static deserializeBinaryFromReader(message: Message, reader: jspb.BinaryReader): Message;
+  toObject(includeInstance?: boolean): ChatMessage.AsObject;
+  static toObject(includeInstance: boolean, msg: ChatMessage): ChatMessage.AsObject;
+  static serializeBinaryToWriter(message: ChatMessage, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ChatMessage;
+  static deserializeBinaryFromReader(message: ChatMessage, reader: jspb.BinaryReader): ChatMessage;
 }
 
-export namespace Message {
+export namespace ChatMessage {
   export type AsObject = {
-    user: string,
-    text: string,
+    message: string,
+    idChat: string,
+  }
+}
+
+export class ChatRequest extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ChatRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: ChatRequest): ChatRequest.AsObject;
+  static serializeBinaryToWriter(message: ChatRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ChatRequest;
+  static deserializeBinaryFromReader(message: ChatRequest, reader: jspb.BinaryReader): ChatRequest;
+}
+
+export namespace ChatRequest {
+  export type AsObject = {
   }
 }
 
@@ -157,46 +171,6 @@ export class GetChatsResponseDto extends jspb.Message {
 export namespace GetChatsResponseDto {
   export type AsObject = {
     chatsList: Array<ChatDto.AsObject>,
-  }
-}
-
-export class LoginRequestDto extends jspb.Message {
-  getLogin(): string;
-  setLogin(value: string): LoginRequestDto;
-
-  getPassword(): string;
-  setPassword(value: string): LoginRequestDto;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): LoginRequestDto.AsObject;
-  static toObject(includeInstance: boolean, msg: LoginRequestDto): LoginRequestDto.AsObject;
-  static serializeBinaryToWriter(message: LoginRequestDto, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): LoginRequestDto;
-  static deserializeBinaryFromReader(message: LoginRequestDto, reader: jspb.BinaryReader): LoginRequestDto;
-}
-
-export namespace LoginRequestDto {
-  export type AsObject = {
-    login: string,
-    password: string,
-  }
-}
-
-export class LoginResponseDto extends jspb.Message {
-  getToken(): string;
-  setToken(value: string): LoginResponseDto;
-
-  serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): LoginResponseDto.AsObject;
-  static toObject(includeInstance: boolean, msg: LoginResponseDto): LoginResponseDto.AsObject;
-  static serializeBinaryToWriter(message: LoginResponseDto, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): LoginResponseDto;
-  static deserializeBinaryFromReader(message: LoginResponseDto, reader: jspb.BinaryReader): LoginResponseDto;
-}
-
-export namespace LoginResponseDto {
-  export type AsObject = {
-    token: string,
   }
 }
 

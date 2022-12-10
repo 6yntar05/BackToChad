@@ -1,5 +1,5 @@
-import {AuthClient} from "./grpc/GreetServiceClientPb";
-import {LoginRequestDto} from "./grpc/greet_pb";
+import {AuthClient} from "./grpc/UsersServiceClientPb";
+import {LoginRequestDto} from "./grpc/users_pb";
 
 const authClient = new AuthClient("");
 
@@ -9,7 +9,7 @@ const metadata = {'Authorization': `Bearer ${token}`};
 export const login = async () => {
 
     const loginRequestDto = new LoginRequestDto();
-    loginRequestDto.setLogin("Test login");
+    loginRequestDto.setLogin("TestUser");
     loginRequestDto.setPassword("SecretPassword228+");
 
     try {

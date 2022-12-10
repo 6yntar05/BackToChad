@@ -106,3 +106,61 @@ export namespace UserDto {
   }
 }
 
+export class CheckRequestDto extends jspb.Message {
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): CheckRequestDto.AsObject;
+  static toObject(includeInstance: boolean, msg: CheckRequestDto): CheckRequestDto.AsObject;
+  static serializeBinaryToWriter(message: CheckRequestDto, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): CheckRequestDto;
+  static deserializeBinaryFromReader(message: CheckRequestDto, reader: jspb.BinaryReader): CheckRequestDto;
+}
+
+export namespace CheckRequestDto {
+  export type AsObject = {
+  }
+}
+
+export class LoginRequestDto extends jspb.Message {
+  getLogin(): string;
+  setLogin(value: string): LoginRequestDto;
+
+  getPassword(): string;
+  setPassword(value: string): LoginRequestDto;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): LoginRequestDto.AsObject;
+  static toObject(includeInstance: boolean, msg: LoginRequestDto): LoginRequestDto.AsObject;
+  static serializeBinaryToWriter(message: LoginRequestDto, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): LoginRequestDto;
+  static deserializeBinaryFromReader(message: LoginRequestDto, reader: jspb.BinaryReader): LoginRequestDto;
+}
+
+export namespace LoginRequestDto {
+  export type AsObject = {
+    login: string,
+    password: string,
+  }
+}
+
+export class LoginResponseDto extends jspb.Message {
+  getToken(): string;
+  setToken(value: string): LoginResponseDto;
+
+  getError(): string;
+  setError(value: string): LoginResponseDto;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): LoginResponseDto.AsObject;
+  static toObject(includeInstance: boolean, msg: LoginResponseDto): LoginResponseDto.AsObject;
+  static serializeBinaryToWriter(message: LoginResponseDto, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): LoginResponseDto;
+  static deserializeBinaryFromReader(message: LoginResponseDto, reader: jspb.BinaryReader): LoginResponseDto;
+}
+
+export namespace LoginResponseDto {
+  export type AsObject = {
+    token: string,
+    error: string,
+  }
+}
+

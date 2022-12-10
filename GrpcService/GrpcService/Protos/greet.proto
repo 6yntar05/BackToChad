@@ -47,19 +47,4 @@ message GetChatsResponseDto {
   repeated ChatDto Chats = 1;
 }
 
-service Auth {
-  rpc Login (LoginRequestDto) returns (LoginResponseDto);
-  rpc Check (Void) returns (Void);
-}
-
-message LoginRequestDto {
-  string login = 1;
-  string password = 2;
-}
-
-message LoginResponseDto {
-  string token = 1;
-  string error = 2;
-}
-
 message Void {}

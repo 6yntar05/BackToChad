@@ -127,3 +127,110 @@ export class UsersClient {
 
 }
 
+export class AuthClient {
+  client_: grpcWeb.AbstractClientBase;
+  hostname_: string;
+  credentials_: null | { [index: string]: string; };
+  options_: null | { [index: string]: any; };
+
+  constructor (hostname: string,
+               credentials?: null | { [index: string]: string; },
+               options?: null | { [index: string]: any; }) {
+    if (!options) options = {};
+    if (!credentials) credentials = {};
+    options['format'] = 'binary';
+
+    this.client_ = new grpcWeb.GrpcWebClientBase(options);
+    this.hostname_ = hostname.replace(/\/+$/, '');
+    this.credentials_ = credentials;
+    this.options_ = options;
+  }
+
+  methodDescriptorLogin = new grpcWeb.MethodDescriptor(
+    '/users.Auth/Login',
+    grpcWeb.MethodType.UNARY,
+    users_pb.LoginRequestDto,
+    users_pb.LoginResponseDto,
+    (request: users_pb.LoginRequestDto) => {
+      return request.serializeBinary();
+    },
+    users_pb.LoginResponseDto.deserializeBinary
+  );
+
+  login(
+    request: users_pb.LoginRequestDto,
+    metadata: grpcWeb.Metadata | null): Promise<users_pb.LoginResponseDto>;
+
+  login(
+    request: users_pb.LoginRequestDto,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: users_pb.LoginResponseDto) => void): grpcWeb.ClientReadableStream<users_pb.LoginResponseDto>;
+
+  login(
+    request: users_pb.LoginRequestDto,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: users_pb.LoginResponseDto) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/users.Auth/Login',
+        request,
+        metadata || {},
+        this.methodDescriptorLogin,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/users.Auth/Login',
+    request,
+    metadata || {},
+    this.methodDescriptorLogin);
+  }
+
+  methodDescriptorCheck = new grpcWeb.MethodDescriptor(
+    '/users.Auth/Check',
+    grpcWeb.MethodType.UNARY,
+    users_pb.CheckRequestDto,
+    users_pb.UserDto,
+    (request: users_pb.CheckRequestDto) => {
+      return request.serializeBinary();
+    },
+    users_pb.UserDto.deserializeBinary
+  );
+
+  check(
+    request: users_pb.CheckRequestDto,
+    metadata: grpcWeb.Metadata | null): Promise<users_pb.UserDto>;
+
+  check(
+    request: users_pb.CheckRequestDto,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: users_pb.UserDto) => void): grpcWeb.ClientReadableStream<users_pb.UserDto>;
+
+  check(
+    request: users_pb.CheckRequestDto,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: users_pb.UserDto) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/users.Auth/Check',
+        request,
+        metadata || {},
+        this.methodDescriptorCheck,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/users.Auth/Check',
+    request,
+    metadata || {},
+    this.methodDescriptorCheck);
+  }
+
+}
+

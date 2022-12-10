@@ -39,6 +39,71 @@ export class ChatRoomClient {
     this.options_ = options;
   }
 
+  methodDescriptorSend = new grpcWeb.MethodDescriptor(
+    '/greet.ChatRoom/Send',
+    grpcWeb.MethodType.UNARY,
+    greet_pb.ChatMessage,
+    greet_pb.ChatRequest,
+    (request: greet_pb.ChatMessage) => {
+      return request.serializeBinary();
+    },
+    greet_pb.ChatRequest.deserializeBinary
+  );
+
+  send(
+    request: greet_pb.ChatMessage,
+    metadata: grpcWeb.Metadata | null): Promise<greet_pb.ChatRequest>;
+
+  send(
+    request: greet_pb.ChatMessage,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.RpcError,
+               response: greet_pb.ChatRequest) => void): grpcWeb.ClientReadableStream<greet_pb.ChatRequest>;
+
+  send(
+    request: greet_pb.ChatMessage,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.RpcError,
+               response: greet_pb.ChatRequest) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/greet.ChatRoom/Send',
+        request,
+        metadata || {},
+        this.methodDescriptorSend,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/greet.ChatRoom/Send',
+    request,
+    metadata || {},
+    this.methodDescriptorSend);
+  }
+
+  methodDescriptorJoinChat = new grpcWeb.MethodDescriptor(
+    '/greet.ChatRoom/JoinChat',
+    grpcWeb.MethodType.SERVER_STREAMING,
+    greet_pb.ChatRequest,
+    greet_pb.ChatMessage,
+    (request: greet_pb.ChatRequest) => {
+      return request.serializeBinary();
+    },
+    greet_pb.ChatMessage.deserializeBinary
+  );
+
+  joinChat(
+    request: greet_pb.ChatRequest,
+    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<greet_pb.ChatMessage> {
+    return this.client_.serverStreaming(
+      this.hostname_ +
+        '/greet.ChatRoom/JoinChat',
+      request,
+      metadata || {},
+      this.methodDescriptorJoinChat);
+  }
+
   methodDescriptorCreateChat = new grpcWeb.MethodDescriptor(
     '/greet.ChatRoom/CreateChat',
     grpcWeb.MethodType.UNARY,
@@ -166,113 +231,6 @@ export class ChatRoomClient {
     request,
     metadata || {},
     this.methodDescriptorGetChats);
-  }
-
-}
-
-export class AuthClient {
-  client_: grpcWeb.AbstractClientBase;
-  hostname_: string;
-  credentials_: null | { [index: string]: string; };
-  options_: null | { [index: string]: any; };
-
-  constructor (hostname: string,
-               credentials?: null | { [index: string]: string; },
-               options?: null | { [index: string]: any; }) {
-    if (!options) options = {};
-    if (!credentials) credentials = {};
-    options['format'] = 'binary';
-
-    this.client_ = new grpcWeb.GrpcWebClientBase(options);
-    this.hostname_ = hostname.replace(/\/+$/, '');
-    this.credentials_ = credentials;
-    this.options_ = options;
-  }
-
-  methodDescriptorLogin = new grpcWeb.MethodDescriptor(
-    '/greet.Auth/Login',
-    grpcWeb.MethodType.UNARY,
-    greet_pb.LoginRequestDto,
-    greet_pb.LoginResponseDto,
-    (request: greet_pb.LoginRequestDto) => {
-      return request.serializeBinary();
-    },
-    greet_pb.LoginResponseDto.deserializeBinary
-  );
-
-  login(
-    request: greet_pb.LoginRequestDto,
-    metadata: grpcWeb.Metadata | null): Promise<greet_pb.LoginResponseDto>;
-
-  login(
-    request: greet_pb.LoginRequestDto,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: greet_pb.LoginResponseDto) => void): grpcWeb.ClientReadableStream<greet_pb.LoginResponseDto>;
-
-  login(
-    request: greet_pb.LoginRequestDto,
-    metadata: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: greet_pb.LoginResponseDto) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/greet.Auth/Login',
-        request,
-        metadata || {},
-        this.methodDescriptorLogin,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/greet.Auth/Login',
-    request,
-    metadata || {},
-    this.methodDescriptorLogin);
-  }
-
-  methodDescriptorCheck = new grpcWeb.MethodDescriptor(
-    '/greet.Auth/Check',
-    grpcWeb.MethodType.UNARY,
-    greet_pb.Void,
-    greet_pb.Void,
-    (request: greet_pb.Void) => {
-      return request.serializeBinary();
-    },
-    greet_pb.Void.deserializeBinary
-  );
-
-  check(
-    request: greet_pb.Void,
-    metadata: grpcWeb.Metadata | null): Promise<greet_pb.Void>;
-
-  check(
-    request: greet_pb.Void,
-    metadata: grpcWeb.Metadata | null,
-    callback: (err: grpcWeb.RpcError,
-               response: greet_pb.Void) => void): grpcWeb.ClientReadableStream<greet_pb.Void>;
-
-  check(
-    request: greet_pb.Void,
-    metadata: grpcWeb.Metadata | null,
-    callback?: (err: grpcWeb.RpcError,
-               response: greet_pb.Void) => void) {
-    if (callback !== undefined) {
-      return this.client_.rpcCall(
-        this.hostname_ +
-          '/greet.Auth/Check',
-        request,
-        metadata || {},
-        this.methodDescriptorCheck,
-        callback);
-    }
-    return this.client_.unaryCall(
-    this.hostname_ +
-      '/greet.Auth/Check',
-    request,
-    metadata || {},
-    this.methodDescriptorCheck);
   }
 
 }
