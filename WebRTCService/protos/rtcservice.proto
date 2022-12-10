@@ -5,20 +5,14 @@ option java_package = "io.grpc.examples.rtcservice";
 option java_outer_classname = "RtcServiceProto";
 option objc_class_prefix = "HLW";
 
-package helloworld;
+package rtcservice;
 
-// The greeting service definition.
 service Greeter {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc GetSession (Request) returns (Reply) {}
 }
 
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
-}
+message Request {}
 
-// The response message containing the greetings
-message HelloReply {
-  string message = 1;
+message Reply {
+  string token = 1;
 }

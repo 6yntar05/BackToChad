@@ -43,15 +43,14 @@ using grpc::Server;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::Status;
-using helloworld::HelloRequest;
-using helloworld::HelloReply;
-using helloworld::Greeter;
+using rtcservice::Request;
+using rtcservice::Reply;
+using rtcservice::Greeter;
 
 // Logic and data behind the server's behavior.
 class GreeterServiceImpl final : public Greeter::Service {
-  Status SayHello(ServerContext* context, const HelloRequest* request, HelloReply* reply) override {
-    std::string prefix("Hello ");
-    reply->set_message(prefix + request->name());
+  Status GetSession(ServerContext* context, const Request* request, Reply* reply) override {
+    reply->set_token("TOKEN!!!!!!!");
     return Status::OK;
   }
 };

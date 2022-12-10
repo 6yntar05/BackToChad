@@ -42,9 +42,9 @@
 using grpc::Channel;
 using grpc::ClientContext;
 using grpc::Status;
-using helloworld::HelloRequest;
-using helloworld::HelloReply;
-using helloworld::Greeter;
+using rtcservice::Request;
+using rtcservice::Reply;
+using rtcservice::Greeter;
 
 class GreeterClient {
  public:
@@ -53,24 +53,24 @@ class GreeterClient {
 
   // Assembles the client's payload, sends it and presents the response back
   // from the server.
-  std::string SayHello(const std::string& user) {
+  std::string GetSession() {
     // Data we are sending to the server.
-    HelloRequest request;
-    request.set_name(user);
+    Request request;
+    //request.set_name(user);
 
     // Container for the data we expect from the server.
-    HelloReply reply;
+    Reply reply;
 
     // Context for the client. It could be used to convey extra information to
     // the server and/or tweak certain RPC behaviors.
     ClientContext context;
 
     // The actual RPC.
-    Status status = stub_->SayHello(&context, request, &reply);
+    Status status = stub_->GetSession(&context, request, &reply);
 
     // Act upon its status.
     if (status.ok()) {
-      return reply.message();
+      return reply.token();
     } else {
       std::cout << status.error_code() << ": " << status.error_message()
                 << std::endl;
@@ -89,8 +89,7 @@ int main(int argc, char** argv) {
   // (use of InsecureChannelCredentials()).
   GreeterClient greeter(grpc::CreateChannel(
       "localhost:12309", grpc::InsecureChannelCredentials()));
-  std::string user("world");
-  std::string reply = greeter.SayHello(user);
+  std::string reply = greeter.GetSession();
   std::cout << "Greeter received: " << reply << std::endl;
 
   return 0;
