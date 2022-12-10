@@ -1,6 +1,8 @@
+using GrpcService.Db;
 using GrpcService.Services;
 using GrpcService.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,10 +26,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("Default");
+    optionsBuilder.UseNpgsql(connectionString);
+});
+
 // Add services to the container.
 builder.Services.AddGrpc();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await appDbContext.Database.MigrateAsync();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
