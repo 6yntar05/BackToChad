@@ -1,7 +1,9 @@
 using GrpcService.Db;
+using GrpcService.Db.Entities;
 using GrpcService.Services;
 using GrpcService.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -9,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 var jwtTokenOptions = new JwtTokenOptions();
 builder.Configuration.GetSection(JwtTokenOptions.Position).Bind(jwtTokenOptions);
+
+builder.Services.AddIdentityCore<User>()
+    .AddRoles<Role>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -49,6 +55,7 @@ app.UseAuthorization();
 // Configure the HTTP request pipeline.
 app.MapGrpcService<ChatService>();
 app.MapGrpcService<AuthService>();
+app.MapGrpcService<UsersService>();
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 app.Run();
