@@ -1,0 +1,3 @@
+[submodule "WebRTCService/libs/libdatachannel"]
+	path = WebRTCService/libs/libdatachannel
+	url = https://github.com/paullouisageneau/libdatachannel

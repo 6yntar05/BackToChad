@@ -38,6 +38,8 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
     optionsBuilder.UseNpgsql(connectionString);
 });
 
+builder.Services.AddSingleton<ChatApp>();
+
 // Add services to the container.
 builder.Services.AddGrpc();
 
@@ -51,6 +53,8 @@ using (var scope = app.Services.CreateScope())
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
 
 // Configure the HTTP request pipeline.
 app.MapGrpcService<ChatService>();

@@ -3,6 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {checkLogin, login} from "./api/greeter";
+
+login("TestUser", "SecretPassword228+")
+    .then(x => {
+        console.log("Login response", x)
+        checkLogin(x.token)
+            .then(y => console.log("Login check", y))
+            .catch(e => console.error("Login check failed", e))
+    })
+    .catch(e => console.error("Login failed", e));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
