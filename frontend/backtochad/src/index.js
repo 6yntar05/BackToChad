@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {checkLogin, login} from "./api/greeter";
+import {checkLogin, joinToChat, login} from "./api/greeter";
 
 login("TestUser", "SecretPassword228+")
     .then(x => {
@@ -13,6 +13,8 @@ login("TestUser", "SecretPassword228+")
             .catch(e => console.error("Login check failed", e))
     })
     .catch(e => console.error("Login failed", e));
+
+joinToChat();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
