@@ -51,6 +51,7 @@ namespace GrpcService.Services
             var user = await _userManager.GetUserAsync(context.GetHttpContext().User);
             Guid session = _chatroomService.JoinUser(user);
 
+
         }
             
     }

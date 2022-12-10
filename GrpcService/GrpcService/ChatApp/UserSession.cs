@@ -4,7 +4,7 @@ using GrpcService.Db.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using System.Xml.Linq;
 
-namespace Chilite.Domain;
+
 
 public class UserSession : IDisposable
 {
