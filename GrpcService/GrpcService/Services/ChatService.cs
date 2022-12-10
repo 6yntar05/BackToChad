@@ -173,4 +173,6 @@ public class ChatService : ChatRoom.ChatRoomBase
 
         return new AddUserToChatResponseDto();
     }
+
+    
 }
