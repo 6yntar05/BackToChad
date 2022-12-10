@@ -41,6 +41,15 @@ builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 // Add services to the container.
 builder.Services.AddGrpc();
 
+builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder =>
+{
+    builder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
+}));
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -52,10 +61,17 @@ using (var scope = app.Services.CreateScope())
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseCors();
+
+app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
+
 // Configure the HTTP request pipeline.
-app.MapGrpcService<ChatService>();
-app.MapGrpcService<AuthService>();
-app.MapGrpcService<UsersService>();
+app.MapGrpcService<ChatService>()
+    .RequireCors("AllowAll");
+app.MapGrpcService<AuthService>()
+    .RequireCors("AllowAll");
+app.MapGrpcService<UsersService>()
+    .RequireCors("AllowAll");
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 app.Run();

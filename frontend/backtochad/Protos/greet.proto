@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package greet;
+
+service ChatRoom {
+  rpc join(stream Message) returns (stream Message);
+  rpc CreateChat(CreateChatRequestDto) returns (CreateChatResponseDto);
+  rpc AddUserToChat(AddUserToChatRequestDto) returns (AddUserToChatResponseDto);
+  rpc GetChats(GetChatsRequestDto) returns (GetChatsResponseDto);
+}
+
+message Message {
+  string user = 1;
+  string text = 2;
+}
+
+message CreateChatRequestDto {
+  string name = 1;
+}
+
+message CreateChatResponseDto {
+  string id = 1;
+  string name = 2;
+}
+
+message AddUserToChatRequestDto {
+  string userId = 1;
+  string chatId = 2;
+}
+
+message AddUserToChatResponseDto {
+  string Error = 1;
+}
+
+message ChatDto {
+  string id = 1;
+  string name = 2;
+}
+
+message GetChatsRequestDto {}
+message GetChatsResponseDto {
+  repeated ChatDto Chats = 1;
+}
+
+service Auth {
+  rpc Login (LoginRequestDto) returns (LoginResponseDto);
+  rpc Check (Void) returns (Void);
+}
+
+message LoginRequestDto {
+  string login = 1;
+  string password = 2;
+}
+
+message LoginResponseDto {
+  string token = 1;
+}
+
+message Void {}
