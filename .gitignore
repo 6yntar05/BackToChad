@@ -131,6 +131,9 @@ dmypy.json
 # vs & vscode
 .vs
 .vscode
+bin/
+obj/
 
+/.idea
 # fe
 node_modules
