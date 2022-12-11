@@ -53,7 +53,9 @@ message ChatDto {
   string name = 2;
 }
 
-message GetChatsRequestDto {}
+message GetChatsRequestDto {
+  
+}
 message GetChatsResponseDto {
   repeated ChatDto Chats = 1;
 }

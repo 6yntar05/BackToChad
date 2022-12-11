@@ -45,7 +45,9 @@ public class UserSession : IDisposable
         using var scope = _chatApp.ServiceScopeFactory.CreateScope();
 
         var chatDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var messages = await chatDbContext.Messages.Where(x => x.ChatId == ChatId).ToListAsync();
+        var messages = await chatDbContext.Messages.Where(x => x.ChatId == ChatId)
+            .OrderBy(x => x.CreatedAt)
+            .ToListAsync();
 
         foreach (var message in messages)
             MessageInvoked(message);
