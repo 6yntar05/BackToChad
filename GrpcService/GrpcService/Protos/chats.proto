@@ -6,7 +6,7 @@ package greet;
 
 service ChatRoom {
   rpc Send(ChatMessage) returns (ChatRequest);
-  rpc JoinChat(ChatRequest) returns (stream ChatMessage);
+  rpc JoinChat(ChatRequest) returns (stream MessageDto);
   rpc CreateChat(CreateChatRequestDto) returns (CreateChatResponseDto);
   
   rpc AddUserToChat(AddUserToChatRequestDto) returns (AddUserToChatResponseDto);
@@ -17,7 +17,18 @@ message ChatMessage {
   string message = 1;
   string id_chat = 2;
 }
-message ChatRequest{}
+
+message ChatRequest{
+  string chatId = 1;
+}
+
+message MessageDto {
+  string id = 1;
+  string createdAt = 2;
+  string chatId = 3;
+  string authorId = 4;
+  string textBody = 5;
+}
 
 message CreateChatRequestDto {
   string name = 1;

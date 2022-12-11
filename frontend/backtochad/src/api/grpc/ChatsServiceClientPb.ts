@@ -86,16 +86,16 @@ export class ChatRoomClient {
     '/greet.ChatRoom/JoinChat',
     grpcWeb.MethodType.SERVER_STREAMING,
     chats_pb.ChatRequest,
-    chats_pb.ChatMessage,
+    chats_pb.MessageDto,
     (request: chats_pb.ChatRequest) => {
       return request.serializeBinary();
     },
-    chats_pb.ChatMessage.deserializeBinary
+    chats_pb.MessageDto.deserializeBinary
   );
 
   joinChat(
     request: chats_pb.ChatRequest,
-    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<chats_pb.ChatMessage> {
+    metadata?: grpcWeb.Metadata): grpcWeb.ClientReadableStream<chats_pb.MessageDto> {
     return this.client_.serverStreaming(
       this.hostname_ +
         '/greet.ChatRoom/JoinChat',

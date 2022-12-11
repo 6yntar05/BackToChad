@@ -10,5 +10,5 @@ public class Message
     public string TextBody { get; set; }
     
     public Chat? Chat { get; set; }
-    public User? User { get; set; }
+    public User? Author { get; set; }
 }

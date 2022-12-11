@@ -1,17 +1,15 @@
-﻿
-using GrpcService.Db;
+﻿using GrpcService.Db;
 using GrpcService.Db.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 
-
 public class ChatApp
 {
     internal IServiceScopeFactory ServiceScopeFactory;
     internal ILogger<ChatApp> Logger;
-    internal Dictionary<Guid,List<UserSession>> Sessions = new();
+    internal Dictionary<Guid, List<UserSession>> Sessions = new();
 
     public ChatApp(IServiceScopeFactory scopeFactory, ILogger<ChatApp> logger)
     {
@@ -19,19 +17,19 @@ public class ChatApp
         Logger = logger;
     }
 
-    public UserSession JoinUser(User user, Chat chat)
+    public UserSession JoinUser(User user, Guid chatId)
     {
-        var userSession = new UserSession(this, user.Id);
-        bool sessionsCneck = Sessions.TryGetValue(chat.Id,out var sessions);
-         if (!sessionsCneck)
-            {
+        var userSession = new UserSession(this, user.Id, chatId);
+        bool sessionsCneck = Sessions.TryGetValue(chatId, out var chatSessions);
+        if (!sessionsCneck)
+        {
             //Хранение Сесиий
-            List <UserSession> sessions1 = new List<UserSession>();
-            sessions1.Add(userSession);
-            Sessions.Add(chat.Id, sessions1);
+            chatSessions = new List<UserSession>();
+            Sessions.Add(chatId, chatSessions);
         }
-  
-        return userSession;  
+        
+        chatSessions!.Add(userSession);
+        return userSession;
     }
 
     public async Task SendAsync(Guid userId, Message chatMessage)
@@ -40,20 +38,18 @@ public class ChatApp
 
         var chatDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        bool Collections = Sessions.TryGetValue(chatMessage.Id,out var userSessions);
-        foreach (var session in userSessions)
-        {
-            session.MessageInvoked(chatMessage);
-        }
-
         try
         {
             var userDb = await chatDbContext.Users.FirstAsync(u => u.Id == userId);
 
-            chatMessage.User = userDb;
-
-            await chatDbContext.Messages.AddAsync(chatMessage);
+            chatDbContext.Add(chatMessage);
             await chatDbContext.SaveChangesAsync();
+            
+            if (!Sessions.TryGetValue(chatMessage.ChatId, out var userSessions))
+                return;
+
+            foreach (var session in userSessions) 
+                session.MessageInvoked(chatMessage);
         }
         catch (Exception ex)
         {

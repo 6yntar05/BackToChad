@@ -1,6 +1,7 @@
 using Grpc.Core;
 using GrpcService.Db;
 using GrpcService.Db.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,7 @@ public class ChatService : ChatRoom.ChatRoomBase
     private readonly UserManager<User> _userManager;
 
     //gRPC ServerStream
-    private IServerStreamWriter<ChatMessage> _resposonceStream;
+    private IServerStreamWriter<MessageDto> _resposonceStream;
     private readonly ILogger<ChatMessage> _logger;
 
 
@@ -40,7 +41,6 @@ public class ChatService : ChatRoom.ChatRoomBase
         {
             Id = Guid.NewGuid(),
             Name = request.Name
-
         };
 
         _appDbContext.Add(chat);
@@ -66,16 +66,20 @@ public class ChatService : ChatRoom.ChatRoomBase
         return responseDto;
     }
 
-
+    [Authorize]
     public override async Task JoinChat(ChatRequest request,
-        IServerStreamWriter<ChatMessage> responseStream,
+        IServerStreamWriter<MessageDto> responseStream,
         ServerCallContext context)
     {
-        var user = await _userManager.Users.FirstAsync();
-        var session = _chatroomService.JoinUser(user);
+        var userId = Guid.Parse(context.GetHttpContext().User.Claims.First(x => x.Type == "Id").Value);
+        var user = await _userManager.Users.FirstAsync(x => x.Id == userId);
+
+        var chatId = Guid.Parse(request.ChatId);
+
+        var session = _chatroomService.JoinUser(user, chatId);
         _resposonceStream = responseStream;
         session.NewMessageSended += SessionOnNewMessageSended;
-        session.Init();
+        await session.Init();
 
         try
         {
@@ -98,6 +102,7 @@ public class ChatService : ChatRoom.ChatRoomBase
         }
     }
 
+    [Authorize]
     public override async Task<ChatRequest> Send(ChatMessage request, ServerCallContext context)
     {
         var userId = Guid.Parse(context.GetHttpContext().User.Claims.First(x => x.Type == "Id").Value);
@@ -106,7 +111,8 @@ public class ChatService : ChatRoom.ChatRoomBase
             Id = Guid.NewGuid(),
             AuthorId = userId,
             ChatId = Guid.Parse(request.IdChat),
-            TextBody = request.Message
+            TextBody = request.Message,
+            CreatedAt = DateTime.UtcNow
         };
 
         await _chatroomService.SendAsync(userId, chatMessage);
@@ -116,9 +122,16 @@ public class ChatService : ChatRoom.ChatRoomBase
 
     #region Private Methods
 
-    private async void SessionOnNewMessageSended(ChatMessage message)
+    private async void SessionOnNewMessageSended(Message message)
     {
-        await _resposonceStream.WriteAsync(new ChatMessage { Message = message.Message });
+        await _resposonceStream.WriteAsync(new MessageDto
+        {
+            Id = message.Id.ToString(),
+            ChatId = message.ChatId.ToString(),
+            CreatedAt = message.CreatedAt.ToString("O"),
+            TextBody = message.TextBody,
+            AuthorId = message.AuthorId.ToString()
+        });
     }
 
     #endregion
@@ -173,6 +186,4 @@ public class ChatService : ChatRoom.ChatRoomBase
 
         return new AddUserToChatResponseDto();
     }
-
-    
 }

@@ -25,6 +25,9 @@ export namespace ChatMessage {
 }
 
 export class ChatRequest extends jspb.Message {
+  getChatid(): string;
+  setChatid(value: string): ChatRequest;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ChatRequest.AsObject;
   static toObject(includeInstance: boolean, msg: ChatRequest): ChatRequest.AsObject;
@@ -35,6 +38,41 @@ export class ChatRequest extends jspb.Message {
 
 export namespace ChatRequest {
   export type AsObject = {
+    chatid: string,
+  }
+}
+
+export class MessageDto extends jspb.Message {
+  getId(): string;
+  setId(value: string): MessageDto;
+
+  getCreatedat(): string;
+  setCreatedat(value: string): MessageDto;
+
+  getChatid(): string;
+  setChatid(value: string): MessageDto;
+
+  getAuthorid(): string;
+  setAuthorid(value: string): MessageDto;
+
+  getTextbody(): string;
+  setTextbody(value: string): MessageDto;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): MessageDto.AsObject;
+  static toObject(includeInstance: boolean, msg: MessageDto): MessageDto.AsObject;
+  static serializeBinaryToWriter(message: MessageDto, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): MessageDto;
+  static deserializeBinaryFromReader(message: MessageDto, reader: jspb.BinaryReader): MessageDto;
+}
+
+export namespace MessageDto {
+  export type AsObject = {
+    id: string,
+    createdat: string,
+    chatid: string,
+    authorid: string,
+    textbody: string,
   }
 }
 

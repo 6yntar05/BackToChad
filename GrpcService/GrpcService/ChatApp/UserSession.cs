@@ -1,10 +1,9 @@
-﻿
-using GrpcService;
+﻿using GrpcService;
 using GrpcService.Db;
 using GrpcService.Db.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using System.Xml.Linq;
-
+using Microsoft.EntityFrameworkCore;
 
 
 public class UserSession : IDisposable
@@ -18,50 +17,49 @@ public class UserSession : IDisposable
     #region Public Properties
 
     public Guid UserId { get; }
+    public Guid ChatId { get; set; }
 
     #endregion
 
     #region Events
 
-    public event Action<ChatMessage>? NewMessageSended;
+    public event Action<Message>? NewMessageSended;
 
     #endregion
 
     #region Constructor
 
-    public UserSession(ChatApp chatApp, Guid userId)
+    public UserSession(ChatApp chatApp, Guid userId, Guid chatId)
     {
-         UserId = userId;
+        UserId = userId;
+        ChatId = chatId;
         _chatApp = chatApp;
     }
 
     #endregion
-    
+
     #region Public Methods
 
-    public void Init()
+    public async Task Init()
     {
         using var scope = _chatApp.ServiceScopeFactory.CreateScope();
 
         var chatDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var messages = await chatDbContext.Messages.Where(x => x.ChatId == ChatId).ToListAsync();
 
-        foreach (var message in chatDbContext.Messages) 
+        foreach (var message in messages)
             MessageInvoked(message);
     }
 
     public void Dispose()
     {
-        _chatApp.Sessions.Remove(this);
+        _chatApp.Sessions[ChatId].Remove(this);
         _chatApp = null!;
     }
 
     public void MessageInvoked(Message message)
     {
-        NewMessageSended?.Invoke(new ChatMessage
-        {
-            IdChat = message.ChatId.ToString(),
-            Message = message.TextBody
-        });
+        NewMessageSended?.Invoke(message);
     }
 
     #endregion
