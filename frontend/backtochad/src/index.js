@@ -3,25 +3,20 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {checkLogin, login} from "./api/users";
-import {joinToChat} from "./api/chats";
+import {BrowserRouter} from "react-router-dom";
+import {AuthProvider} from "./contexts/authContext";
 
-// login("TestUser", "SecretPassword228+")
-//     .then(x => {
-//         console.log("Login response", x)
-//         checkLogin(x.token)
-//             .then(y => console.log("Login check", y))
-//             .catch(e => console.error("Login check failed", e))
-//     })
-//     .catch(e => console.error("Login failed", e));
-
-joinToChat();
+// joinToChat();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <AuthProvider>
+            <BrowserRouter>
+                <App/>
+            </BrowserRouter>
+        </AuthProvider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
