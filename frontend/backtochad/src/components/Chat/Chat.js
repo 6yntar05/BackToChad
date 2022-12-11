@@ -50,8 +50,7 @@ const ChatItem = (props) => {
 }
 
 const Message = (props) => {
-
-    const input = '# Test'
+    const input = '```python\ndef func():\n    pass\n```'
 
     const menu =
         <SplitButton align="right" title="" id="dropdown-menu-align-end">
