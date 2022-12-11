@@ -95,7 +95,7 @@ const Message = (props) => {
 }
 
 const Chat = () => {
-    const input = '```python\ndef func():\n    pass```'
+    const input = '```python\ndef func():\n    pass\n```'
     const list_item = [
         {
             'name': 'Mary',
