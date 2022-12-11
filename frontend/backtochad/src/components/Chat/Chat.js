@@ -95,6 +95,7 @@ const Message = (props) => {
 }
 
 const Chat = () => {
+    const input = '```python\ndef func():\n    pass```'
     const list_item = [
         {
             'name': 'Mary',
@@ -261,6 +262,12 @@ const Chat = () => {
                         nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
                         commodi
                         consequatur?" 
+                        msg_date="12:00 PM | Aug 13" 
+                      />
+                      <Message 
+                        author_id={1} 
+                        current_user_id={1} 
+                        msg=<ReactMarkdown children={input} /> 
                         msg_date="12:00 PM | Aug 13" 
                       />
     
