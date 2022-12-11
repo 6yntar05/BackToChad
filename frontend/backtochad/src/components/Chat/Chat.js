@@ -11,7 +11,10 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import Scrollbar from 'react-perfect-scrollbar'
+import ReactMarkdown from 'react-markdown';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import SplitButton from 'react-bootstrap/SplitButton';
 
 import './Chat.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -44,19 +47,22 @@ const ChatItem = (props) => {
 
 const Message = (props) => {
 
+  const input = '# Test'
+
   return (
-    <div className={`d-flex flex-row ${props.author_id===props.current_user_id?'justify-content-end':'justify-content-start'}`}>
-      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
-        alt="avatar 1" style={{"width": "45px", "height": "100%"}}></img>
-      <div>
-        <p className="small p-2 ms-3 mb-1 rounded-3" style={{"backgroundColor": "#f5f6f7"}}>
-          {props.msg}
-        </p>
-        <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
-          {props.msg_date}
-        </p>
-      </div>
-    </div>
+    // <div className={`d-flex flex-row ${props.author_id===props.current_user_id?'justify-content-end':'justify-content-start'}`}>
+    //   <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+    //     alt="avatar 1" style={{"width": "45px", "height": "100%"}}></img>
+    //   <div>
+    //     <p className="small p-2 ms-3 mb-1 rounded-3" style={{"backgroundColor": "#f5f6f7"}}>
+    //       {props.msg}
+    //     </p>
+    //     <p className="small ms-3 mb-3 rounded-3 text-muted float-end">
+    //       {props.msg_date}
+    //     </p>
+    //   </div>
+    // </div>
+    <ReactMarkdown source={input} />
   )
 }
 
@@ -160,7 +166,17 @@ const Chat = () => {
                             dolor
                             sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                             dolore
-                            magna aliqua.</p>
+                            magna aliqua.
+                            <SplitButton
+                              align="right"
+                              title="Action"
+                              id="dropdown-menu-align-end"
+                            >
+                              <Dropdown.Item eventKey="1">Создать задачу</Dropdown.Item>
+                              <Dropdown.Divider />
+                              <Dropdown.Item eventKey="4">Пометить важным</Dropdown.Item>
+                            </SplitButton>
+                          </p>
                           <p className="small ms-3 mb-3 rounded-3 text-muted float-end">12:00 PM | Aug 13</p>
                         </div>
                       </div>
